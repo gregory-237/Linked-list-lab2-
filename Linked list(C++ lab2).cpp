@@ -48,8 +48,7 @@ public:
     void delete_node(T data);
     void remove(int index);
     T& operator[](int index);
-    friend LinkedList<T>& lucky_numbers(int end);
-    friend bool isPrime(int number);
+    static LinkedList<T> lucky_numbers(int end);
     int get_size()
     {
         return this->_size;
@@ -278,76 +277,15 @@ LinkedList<T>& LinkedList<T>::operator=(LinkedList<T> other)
     return *this;
 }
 
-template <typename T>
-LinkedList<T>& lucky_numbers(int end) {
-    LinkedList<T> nonLuckyNumbers; 
-
-    for (int i = 1; i <= end; ++i) {
-        nonLuckyNumbers.push_back(i);
-    }
-
-    int current = 2;
-    int count = 1;
-
-    while (current <= end && count <= end) {
-        Node* current_node = new Node(nonLuckyNumbers.head);
-        Node* prev_node = new Node(, ,nullptr);
-        int position = 1;
-
-        while (current_node != nullptr) {
-            if (position == current) {
-                if (prev_node != nullptr) {
-                    prev_node->_next = current_node->_next;
-                    if (current_node->_next != nullptr) {
-                        current_node->_next->_prev = prev_node;
-                    }
-                }
-                else {
-                    nonLuckyNumbers.head = current_node->_next;
-                    if (current_node->_next != nullptr) {
-                        current_node->_next->_prev = nullptr;
-                    }
-                }
-                current_node = current_node->_next;
-            }
-            else {
-                prev_node = current_node;
-                current_node = current_node->_next;
-            }
-            position++;
-        }
-
-        do {
-            current++;
-        } while (!isPrime(current));
-
-        count++;
-    }
-
-    return nonLuckyNumbers;
+template<typename T>
+LinkedList<T> LinkedList<T>::lucky_numbers(int end) {
+   pass
 }
 
-template <typename T>
-bool isPrime(int number) {
-    if (number <= 1) {
-        return false;
-    }
-
-    for (int i = 2; i * i <= number; ++i) {
-        if (number % i == 0) {
-            return false;
-        }
-    }
-
-    return true;
-}
 
 int main() {
-    LinkedList<int>list1;
-    list1 = lucky_numbers(10);
-    for (int i = 0; i < list1.get_size(); ++i) {
-        cout << list1[i] << endl;
-    }
+    
+
 }
 
 
