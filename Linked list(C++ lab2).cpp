@@ -291,7 +291,6 @@ LinkedList<T> add(LinkedList<T> a, LinkedList<T> b) {
 
 template <typename T>
 long long multiply(LinkedList<T> a, LinkedList<T>b) {
-    LinkedList<int>* result = new LinkedList<int>;
     long long N = 1000000007;
     long long num1 = 0, num2 = 0;
     while (a.head || b.head) {
@@ -314,21 +313,100 @@ long long multiply(LinkedList<T> a, LinkedList<T>b) {
         (num2 % N)) % N);
 }
 
-
-
-
-
-
 int main() {
-    LinkedList<int> a, b, c;
-    a.push_tail(7);
-    a.push_tail(8);
-    b.push_tail(7);
-    c = add(a, b);
-    cout << c;
-    cout << endl;
-    cout << multiply(a, b);
 
+    //Operator =
+    cout << "Operator =" << endl;
+    LinkedList<int> a, b;
+    a.push_tail(1);
+    a.push_tail(2);
+    b = a;
+    cout << "a: " << a << endl << "b: " << b << endl;
+
+    //push_tail
+    cout << endl << "push_tail" << endl;
+    LinkedList<int> c, d;
+    c.push_tail(5);
+    c.push_tail(6);
+    d.push_tail(3);
+    d.push_tail(4);
+    cout << "d: " << d << endl << "c: " << c << endl;
+    d.push_tail(c);
+    cout << "d.push_tail(c) = " << d << endl;
+
+    //push_head
+    cout << endl << "push_head" << endl;
+    LinkedList<int> f, g;
+    f.push_head(4);
+    f.push_head(3);
+    g.push_head(2);
+    g.push_head(1);
+    cout << "f: " << f << endl << "g: " << g << endl;
+    f.push_head(g);
+    cout << "f.push_head(g) = " << f << endl;
+
+    //pop_head
+    cout << endl << "pop_head" << endl;
+    LinkedList<int>i;
+    i.push_tail(666);
+    i.push_tail(1);
+    i.push_tail(2);
+    cout << "i: " << i << endl;
+    i.pop_head();
+    cout << "i: " << i << endl;
+
+    //pop_tail
+    cout << endl << "pop_tail" << endl;
+    LinkedList<int>j;
+    j.push_tail(1);
+    j.push_tail(2);
+    j.push_tail(666);
+    cout << "j: " << j << endl;
+    j.pop_tail();
+    cout << "j: " << j << endl;
+
+    //delete_node
+    cout << endl << "delete_node" << endl;
+    LinkedList<int>k;
+    k.push_tail(1);
+    k.push_tail(3);
+    k.push_tail(2);
+    k.push_tail(3);
+    k.push_tail(3);
+    cout << "k: " << k << endl;
+    k.delete_node(3);
+    cout << "k.delete_node(3) = " << k << endl;
+
+    //operator[]
+    cout << endl << "operator[]" << endl;
+    LinkedList<int>l;
+    l.push_tail(1);
+    l.push_tail(2);
+    l.push_tail(3);
+    l.push_tail(4);
+    l.push_tail(5);
+    cout << "l[2] = " << l[2] << endl;
+    l[2] = 2;
+    cout << "l[2] = " << l[2] << endl;
+    //add
+    cout << endl << "sum of lists" << endl;
+    LinkedList<int>num1, num2, sum;
+    num1.push_tail(1);
+    num1.push_tail(9);
+    num1.push_tail(7);
+    num2.push_tail(8);
+    num2.push_tail(0);
+    num2.push_tail(3);
+    sum = add(num1, num2);
+    cout << num1 << " + " << num2 << " = " << sum << endl;
+    //multiply
+    cout << endl << "multiply of lists" << endl;
+    LinkedList<int>num3, num4;
+    num3.push_tail(1);
+    num3.push_tail(2);
+    num3.push_tail(5);
+    num4.push_tail(8);
+    cout << num3 << " * " << num4 << " = " << multiply(num3, num4) << endl;
 }
 
 
