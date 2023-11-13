@@ -188,31 +188,31 @@ public:
         }
     }
 
-    void remove(int index)
-    {
-        if (index < 0 || index >= _size)
-        {
-            throw out_of_range("wrong index to remove");
-        }
-        Node* current = head;
-        for (int i = 0; i < index; i++)
-        {
-            current = current->_next;
-        }
-        if (current->_prev != nullptr)
-        {
-            current->_prev->_next = current->_next;
-        }
-        else {
-            head = current->_next;
-        }
-        if (current->_next != nullptr)
-        {
-            current->_next->_prev = current->_prev;
-        }
-        delete current;
-        _size--;
-    }
+    //void remove(int index)
+    //{
+    //    if (index < 0 || index >= _size)
+    //    {
+    //        throw out_of_range("wrong index to remove");
+    //    }
+    //    Node* current = head;
+    //    for (int i = 0; i < index; i++)
+    //    {
+    //        current = current->_next;
+    //    }
+    //    if (current->_prev != nullptr)
+    //    {
+    //        current->_prev->_next = current->_next;
+    //    }
+    //    else {
+    //        head = current->_next;
+    //    }
+    //    if (current->_next != nullptr)
+    //    {
+    //        current->_next->_prev = current->_prev;
+    //    }
+    //    delete current;
+    //    _size--;
+    //}
 
     T operator[](int index) const
     {
@@ -290,33 +290,31 @@ LinkedList<T> add(LinkedList<T> a, LinkedList<T> b) {
 }
 
 template <typename T>
-long long multiply(LinkedList<T> a, LinkedList<T>b) {
-    long long N = 1000000007;
-    long long num1 = 0, num2 = 0;
+int multiply(LinkedList<T> a, LinkedList<T>b) {
+    int num1 = 0, num2 = 0;
     while (a.head || b.head) {
         if (a.head)
         {
-            num1 = (((num1) * 10) % N +
-                a.head->_data);
+            num1 = num1 * 10 + a.head->_data;
             a.head = a.head->_next;
         }
 
         if (b.head)
         {
-            num2 = (((num2) * 10) % N +
-                b.head->_data);
+            num2 = num2 * 10 + b.head->_data;
             b.head = b.head->_next;
         }
 
     }
-    return (((num1 % N) *
-        (num2 % N)) % N);
+    return num1 * num2;
 }
+
+
 
 int main() {
 
     //Operator =
-    cout << "Operator =" << endl;
+    cout << "operator =" << endl;
     LinkedList<int> a, b;
     a.push_tail(1);
     a.push_tail(2);
@@ -408,7 +406,3 @@ int main() {
     num4.push_tail(8);
     cout << num3 << " * " << num4 << " = " << multiply(num3, num4) << endl;
 }
-
-
-
-
