@@ -1,6 +1,5 @@
 ﻿// Linked list(C++ lab2).cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
-#include <stack>
 #include <iostream>
 #include<algorithm>
 using namespace std;
@@ -188,32 +187,6 @@ public:
         }
     }
 
-    //void remove(int index)
-    //{
-    //    if (index < 0 || index >= _size)
-    //    {
-    //        throw out_of_range("wrong index to remove");
-    //    }
-    //    Node* current = head;
-    //    for (int i = 0; i < index; i++)
-    //    {
-    //        current = current->_next;
-    //    }
-    //    if (current->_prev != nullptr)
-    //    {
-    //        current->_prev->_next = current->_next;
-    //    }
-    //    else {
-    //        head = current->_next;
-    //    }
-    //    if (current->_next != nullptr)
-    //    {
-    //        current->_next->_prev = current->_prev;
-    //    }
-    //    delete current;
-    //    _size--;
-    //}
-
     T operator[](int index) const
     {
         int count = 0;
@@ -270,7 +243,7 @@ public:
 
 template <typename T>
 LinkedList<T> add(LinkedList<T> a, LinkedList<T> b) {
-    LinkedList<int>* result = new LinkedList<int>;
+    LinkedList<int> result;
     int carry = 0;
     int i = a.get_size() - 1;
     int j = b.get_size() - 1;
@@ -280,35 +253,53 @@ LinkedList<T> add(LinkedList<T> a, LinkedList<T> b) {
         int digit2 = j >= 0 ? b[j] : 0;
         int sum = digit1 + digit2 + carry;
         carry = sum / 10;
-        result->push_head(sum % 10);
+        result.push_head(sum % 10);
         if (i >= 0) --i;
         if (j >= 0) --j;
 
         
     }
-    return *result;
+    return result;
 }
 
 template <typename T>
-int multiply(LinkedList<T> a, LinkedList<T>b) {
-    int num1 = 0, num2 = 0;
-    while (a.head || b.head) {
-        if (a.head)
-        {
-            num1 = num1 * 10 + a.head->_data;
-            a.head = a.head->_next;
-        }
-
-        if (b.head)
-        {
-            num2 = num2 * 10 + b.head->_data;
-            b.head = b.head->_next;
-        }
-
+LinkedList<T> multiply(const LinkedList<T>& a, const LinkedList<T>& b) {
+    LinkedList<int> result;
+    if (a[0] == 0 || b[0] == 0) 
+    {
+        result.push_head(0);
+        return result;
     }
-    return num1 * num2;
-}
+    // Умножение каждой цифры из a на каждую цифру из b
+    for (int i = a.get_size() - 1; i >= 0; --i) {
+        int carry = 0;
+        LinkedList<T> temp_result;  // Временный список для хранения промежуточных результатов
 
+        // Добавляем нули в конец в зависимости от позиции цифры в a
+        for (int k = 0; k < a.get_size() - 1 - i; ++k) {
+            temp_result.push_tail(0);
+        }
+
+        for (int j = b.get_size() - 1; j >= 0; --j) {
+            // Умножаем текущие цифры и прибавляем к промежуточному результату
+            T digit1 = a[i];
+            T digit2 = b[j];
+            T product = digit1 * digit2 + carry;
+            carry = product / 10;
+            temp_result.push_head(product % 10);
+        }
+
+        // Добавляем последний перенос, если есть
+        if (carry > 0) {
+            temp_result.push_head(carry);
+        }
+
+        // Складываем текущий промежуточный результат с общим результатом
+        result = add(result, temp_result);
+    }
+
+    return result;
+}
 
 
 int main() {
@@ -395,8 +386,7 @@ int main() {
     num2.push_tail(8);
     num2.push_tail(0);
     num2.push_tail(3);
-    sum = add(num1, num2);
-    cout << num1 << " + " << num2 << " = " << sum << endl;
+    cout << num1 << " + " << num2 << " = " << add(num1, num2) << endl;
     //multiply
     cout << endl << "multiply of lists" << endl;
     LinkedList<int>num3, num4;
