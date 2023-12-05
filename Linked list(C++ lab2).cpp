@@ -117,11 +117,11 @@ public:
             list.push_head(tmp->_data);
             tmp = tmp->_next;
         }
-        Node* kk = list.head;
-        while (kk != nullptr)
+        Node* h = list.head;
+        while (h != nullptr)
         {
             this->push_head(kk->_data);
-            kk = kk->_next;
+            h = h->_next;
         }
     }
 
