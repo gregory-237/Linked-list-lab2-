@@ -98,12 +98,13 @@ public:
         }
     }
 
-    void push_head(T data)
-    {
-        head = new Node(data, head);
-        if (head->_next != nullptr) {
-            head->_next->_prev = head;
+    void push_head(T data) {
+        Node* new_node = new Node(data);
+        new_node->_next = head;
+        if (head != nullptr) {
+            head->_prev = new_node;
         }
+        head = new_node;
         _size++;
     }
 
@@ -120,7 +121,7 @@ public:
         Node* h = list.head;
         while (h != nullptr)
         {
-            this->push_head(kk->_data);
+            this->push_head(h->_data);
             h = h->_next;
         }
     }
@@ -270,18 +271,16 @@ LinkedList<T> multiply(const LinkedList<T>& a, const LinkedList<T>& b) {
         result.push_head(0);
         return result;
     }
-    // Умножение каждой цифры из a на каждую цифру из b
+
     for (int i = a.get_size() - 1; i >= 0; --i) {
         int carry = 0;
-        LinkedList<T> temp_result;  // Временный список для хранения промежуточных результатов
+        LinkedList<T> temp_result;
 
-        // Добавляем нули в конец в зависимости от позиции цифры в a
         for (int k = 0; k < a.get_size() - 1 - i; ++k) {
             temp_result.push_tail(0);
         }
 
         for (int j = b.get_size() - 1; j >= 0; --j) {
-            // Умножаем текущие цифры и прибавляем к промежуточному результату
             T digit1 = a[i];
             T digit2 = b[j];
             T product = digit1 * digit2 + carry;
@@ -289,12 +288,10 @@ LinkedList<T> multiply(const LinkedList<T>& a, const LinkedList<T>& b) {
             temp_result.push_head(product % 10);
         }
 
-        // Добавляем последний перенос, если есть
         if (carry > 0) {
             temp_result.push_head(carry);
         }
 
-        // Складываем текущий промежуточный результат с общим результатом
         result = add(result, temp_result);
     }
 
